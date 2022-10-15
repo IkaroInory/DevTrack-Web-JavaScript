@@ -26,7 +26,7 @@
                 </el-row>
                 <el-row justify="end">
                     <el-form-item class="btn-register">
-                        <el-button type="text" @click="jumpRegister">注册</el-button>
+                        <el-link type="primary" :underline="false" @click="jumpRegister">注册</el-link>
                     </el-form-item>
                 </el-row>
             </el-form>
@@ -69,12 +69,8 @@
                     password: ''
                 },
                 rules: {
-                    userName: [
-                        {validator: checkUserName, trigger: ['blur']}
-                    ],
-                    password: [
-                        {validator: checkPassword, trigger: ['blur']}
-                    ]
+                    userName: [{validator: checkUserName, trigger: ['blur']}],
+                    password: [{validator: checkPassword, trigger: ['blur']}]
                 }
             }
         },
@@ -85,7 +81,7 @@
                 })
             },
             jumpRegister() {
-                console.log('jump')
+                this.$router.replace({name: 'register'});
             }
         }
     }
@@ -93,6 +89,13 @@
 
 <style scoped>
     .login-container {
+        left: 0;
+        top: 0;
+
+        width: 100%;
+
+        position: absolute;
+
         background-color: #2b4b6b;
         height: 100vh;
     }
