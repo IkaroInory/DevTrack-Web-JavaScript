@@ -12,11 +12,11 @@
                 status-icon
             >
                 <!--用户名及密码-->
-                <el-form-item prop="userName">
-                    <el-input v-model="loginForm.userName" placeholder="用户名"></el-input>
+                <el-form-item prop="username">
+                    <el-input v-model="loginForm.username" placeholder="用户名"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" placeholder="密码" type="password"></el-input>
+                    <el-input v-model="loginForm.password" placeholder="密码" type="password" show-password></el-input>
                 </el-form-item>
                 <!--登录和注册按键-->
                 <el-row justify="center">
@@ -26,7 +26,7 @@
                 </el-row>
                 <el-row justify="end">
                     <el-form-item class="btn-register">
-                        <el-button type="text" @click="jumpRegister">注册</el-button>
+                        <el-link :underline="false" type="primary" @click="jumpRegister">注册</el-link>
                     </el-form-item>
                 </el-row>
             </el-form>
@@ -36,21 +36,25 @@
 
 <script>
     import axios from "axios";
+    import PortList from "@/api/PortList";
 
     export default {
         name: "Login",
         data() {
+            //用户名校验
             const checkUserName = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入用户名'))
                 } else {
-                    if (isNaN(value)) {
-                        callback(new Error('请输入正确的用户名，用户名由数字组成！'))
+                    const regex = new RegExp("\\w{6,20}")
+                    if (!regex.test(value)) {
+                        callback(new Error('用户名应由字母，数字和_组成，长度为6~20')) // /w{6,20}
                     } else {
                         callback()
                     }
                 }
             }
+            //密码校验
             const checkPassword = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入密码'))
@@ -64,12 +68,14 @@
                 }
             }
             return {
+                //登录表单数据
                 loginForm: {
                     userName: '',
                     password: ''
                 },
+                //登录表单校验规则
                 rules: {
-                    userName: [
+                    username: [
                         {validator: checkUserName, trigger: ['blur']}
                     ],
                     password: [
@@ -79,13 +85,34 @@
             }
         },
         methods: {
+            //登录提交按钮
             submitForm() {
-                axios.get('', {params: this.$data.loginForm}).then((res) => {
-                    console.log('ok')
+                this.$refs.loginFormRef.validate((valid) => {
+                    if(valid) {
+                        axios
+                            .get(PortList.url + PortList.accounts.url + PortList.accounts.login, {params: this.$data.loginForm})
+                            .then((res) => {
+                                if (res.data.statusCode === 100) {
+                                    alert('登录成功')
+                                    this.$router.push('/')
+                                    //存储用户数据到浏览器本地
+                                    let p = res.data.resultData
+                                    localStorage.setItem("account", JSON.stringify(p))
+                                } else if (res.data.statusCode === 202) {
+                                    alert('没有该用户')
+                                } else if (res.data.statusCode === 203) {
+                                    alert('密码不正确')
+                                }
+                            })
+                    } else {
+                        alert("请填写正确的表单数据")
+                    }
                 })
+
             },
+            //注册跳转按钮
             jumpRegister() {
-                console.log('jump')
+                this.$router.push('/register')
             }
         }
     }
@@ -95,6 +122,10 @@
     .login-container {
         background-color: #2b4b6b;
         height: 100vh;
+        top: 0;
+        left: 0;
+        width: 100%;
+        position: absolute;
     }
 
     .login-box {
