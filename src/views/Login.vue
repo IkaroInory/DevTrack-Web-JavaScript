@@ -75,12 +75,8 @@
                 },
                 //登录表单校验规则
                 rules: {
-                    username: [
-                        {validator: checkUserName, trigger: ['blur']}
-                    ],
-                    password: [
-                        {validator: checkPassword, trigger: ['blur']}
-                    ]
+                    userName: [{validator: checkUserName, trigger: ['blur']}],
+                    password: [{validator: checkPassword, trigger: ['blur']}]
                 }
             }
         },
@@ -112,7 +108,7 @@
             },
             //注册跳转按钮
             jumpRegister() {
-                this.$router.push('/register')
+                this.$router.replace({name: 'register'});
             }
         }
     }
@@ -120,6 +116,13 @@
 
 <style scoped>
     .login-container {
+        left: 0;
+        top: 0;
+
+        width: 100%;
+
+        position: absolute;
+
         background-color: #2b4b6b;
         height: 100vh;
         top: 0;
