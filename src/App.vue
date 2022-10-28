@@ -26,4 +26,7 @@
 
         position: absolute;
     }
+    body {
+        margin:0;      /*去除白边*/
+    }
 </style>
