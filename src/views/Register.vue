@@ -199,17 +199,10 @@
     .register-container {
         left: 0;
         top: 0;
-
         width: 100%;
-
         position: absolute;
-
         background-color: #2b4b6b;
         height: 100vh;
-        top: 0;
-        left: 0;
-        width: 100%;
-        position: absolute;
     }
 
     .register-box {
