@@ -21,6 +21,6 @@
     .login-container {
         width: 400px;
         margin: 180px auto;
-        padding: 20px 30px 0;
+        padding: 0 20px;
     }
 </style>
