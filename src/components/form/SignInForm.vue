@@ -11,9 +11,10 @@
             <el-button class="form-button" type="primary" @click="submitSignInForm" :loading="requestingService">登录</el-button>
         </el-form-item>
 
-        <el-form-item style="justify-content: space-between">
+        <el-form-item>
             <router-link class="el-link el-link--primary" to="/forgetPassword">忘记密码</router-link>
-            <router-link class="el-link el-link--primary" :to="{name: 'register'}">注册账号</router-link>
+            <div style="flex-grow: 1"/>
+            没有账号？<router-link class="el-link el-link--primary" :to="{name: 'register'}">点此注册</router-link>
         </el-form-item>
     </el-form>
 </template>
