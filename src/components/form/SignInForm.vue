@@ -23,9 +23,13 @@
     import router from "@/router";
     import portList from "@/api/PortList";
     import statusCode from "@/api/StatusCode";
+    import Environment from "@/api/Environment";
 
     export default {
         name: "SignInForm",
+        mounted() {
+            Environment.setTitle("登录");
+        },
         data() {
             return {
                 requestingService: false,
