@@ -4,13 +4,7 @@
             <div class="login-title">登录</div>
 
             <!--登录表单-->
-            <el-form
-                ref="loginFormRef"
-                :model="loginForm"
-                :rules="rules"
-                class="login-form"
-                status-icon
-            >
+            <el-form class="login-form" ref="loginFormRef" :model="loginForm" :rules="rules" status-icon>
                 <!--用户名及密码-->
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.username" placeholder="用户名"></el-input>
@@ -18,6 +12,7 @@
                 <el-form-item prop="password">
                     <el-input v-model="loginForm.password" placeholder="密码" type="password" show-password></el-input>
                 </el-form-item>
+
                 <!--登录和注册按键-->
                 <el-row justify="center">
                     <el-form-item class="btn-login">
@@ -84,7 +79,7 @@
             //登录提交按钮
             submitForm() {
                 this.$refs.loginFormRef.validate((valid) => {
-                    if(valid) {
+                    if (valid) {
                         axios
                             .get(PortList.url + PortList.accounts.url + PortList.accounts.login, {params: this.$data.loginForm})
                             .then((res) => {
