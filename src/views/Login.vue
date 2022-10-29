@@ -4,13 +4,7 @@
             <div class="login-title">登录</div>
 
             <!--登录表单-->
-            <el-form
-                ref="loginFormRef"
-                :model="loginForm"
-                :rules="rules"
-                class="login-form"
-                status-icon
-            >
+            <el-form class="login-form" ref="loginFormRef" :model="loginForm" :rules="rules" status-icon>
                 <!--用户名及密码-->
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.username" placeholder="用户名"></el-input>
@@ -18,6 +12,7 @@
                 <el-form-item prop="password">
                     <el-input v-model="loginForm.password" placeholder="密码" type="password" show-password></el-input>
                 </el-form-item>
+
                 <!--登录和注册按键-->
                 <el-row justify="center">
                     <el-form-item class="btn-login">
@@ -37,6 +32,7 @@
 <script>
     import axios from "axios";
     import PortList from "@/api/PortList";
+    import router from "@/router";
 
     export default {
         name: "Login",
@@ -84,13 +80,13 @@
             //登录提交按钮
             submitForm() {
                 this.$refs.loginFormRef.validate((valid) => {
-                    if(valid) {
+                    if (valid) {
                         axios
                             .get(PortList.url + PortList.accounts.url + PortList.accounts.login, {params: this.$data.loginForm})
                             .then((res) => {
                                 if (res.data.statusCode === 100) {
                                     alert('登录成功')
-                                    this.$router.push('/')
+                                    router.push('/');
                                     //存储用户数据到浏览器本地
                                     let p = res.data.resultData
                                     localStorage.setItem("account", JSON.stringify(p))
@@ -108,7 +104,7 @@
             },
             //注册跳转按钮
             jumpRegister() {
-                this.$router.replace({name: 'register'});
+                router.push({name: 'register'});
             }
         }
     }

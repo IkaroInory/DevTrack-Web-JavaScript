@@ -9,6 +9,7 @@ import Project from "@/views/HomeChildren/Project";
 import Plus from "@/views/HomeChildren/Plus";
 import Search from "@/views/HomeChildren/Search";
 import Message from "@/views/HomeChildren/Message";
+import SignIn from "@/views/SignIn";
 
 const routes = [
     {
@@ -27,6 +28,11 @@ const routes = [
         path: '/login',
         name: 'login',
         component: Login
+    },
+    {
+        path: '/signin',
+        name: 'signIn',
+        component: SignIn
     },
     {
         path: '/register',
