@@ -32,6 +32,7 @@
 <script>
     import axios from "axios";
     import PortList from "@/api/PortList";
+    import router from "@/router";
 
     export default {
         name: "Login",
@@ -85,7 +86,7 @@
                             .then((res) => {
                                 if (res.data.statusCode === 100) {
                                     alert('登录成功')
-                                    this.$router.push('/')
+                                    router.push('/');
                                     //存储用户数据到浏览器本地
                                     let p = res.data.resultData
                                     localStorage.setItem("account", JSON.stringify(p))
@@ -103,7 +104,7 @@
             },
             //注册跳转按钮
             jumpRegister() {
-                this.$router.replace({name: 'register'});
+                router.push({name: 'register'});
             }
         }
     }
