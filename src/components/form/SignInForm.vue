@@ -8,15 +8,12 @@
         </el-form-item>
 
         <el-form-item>
-            <el-checkbox v-model="rememberAccount" label="记住账号"/>
-        </el-form-item>
-        <el-form-item>
             <el-button class="form-button" type="primary" @click="submitSignInForm" :loading="requestingService">登录</el-button>
         </el-form-item>
 
-        <el-form-item>
-            没有账号？
-            <router-link class="el-link el-link--primary" :to="{name: 'register'}">点此注册</router-link>
+        <el-form-item style="justify-content: space-between">
+            <router-link class="el-link el-link--primary" to="/forgetPassword">忘记密码</router-link>
+            <router-link class="el-link el-link--primary" :to="{name: 'register'}">注册账号</router-link>
         </el-form-item>
     </el-form>
 </template>
@@ -26,15 +23,19 @@
     import router from "@/router";
     import portList from "@/api/PortList";
     import statusCode from "@/api/StatusCode";
+    import Environment from "@/api/Environment";
 
     export default {
         name: "SignInForm",
+        mounted() {
+            Environment.setTitle("登录");
+        },
         data() {
             return {
                 requestingService: false,
                 rememberAccount: false,
                 signInForm: {
-                    username: "",
+                    username: "" || localStorage.getItem("signInFormUsername"),
                     password: ""
                 },
                 signInFormRules: {
@@ -59,6 +60,8 @@
                                     type: "success",
                                     duration: 3000
                                 });
+                                if (this.$data.rememberAccount === true)
+                                    localStorage.setItem("signInFormUsername", this.$data.signInForm.username);
                                 router.push('/');
                                 sessionStorage.setItem("account", JSON.stringify(res.data.resultData));
                             }
